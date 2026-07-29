@@ -1,0 +1,157 @@
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+:root {
+  --width: 500;
+  --height: 140;
+  --radius: 65;
+  --frost: 0.00;
+  --saturation: 2.0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+  background-color: #0b0c10;
+}
+
+body {
+  background-image: url('./bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Liquid Glass Element */
+.effect {
+  opacity: 1 !important;
+  height: calc(var(--height) * 1px);
+  width: calc(var(--width) * 1px);
+  border-radius: calc(var(--radius) * 1px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999999;
+  cursor: grab;
+  user-select: none;
+
+  background: rgba(255, 255, 255, var(--frost, 0));
+  -webkit-backdrop-filter: url(#filter) saturate(var(--saturation, 2.0)) brightness(1.1);
+          backdrop-filter: url(#filter) saturate(var(--saturation, 2.0)) brightness(1.1);
+
+  box-shadow:
+    0 0 2px 1px rgba(255, 255, 255, 0.4) inset,
+    0 0 10px 4px rgba(255, 255, 255, 0.15) inset,
+    0px 4px 16px rgba(17, 17, 26, 0.05),
+    0px 8px 24px rgba(17, 17, 26, 0.05),
+    0px 16px 56px rgba(17, 17, 26, 0.05);
+
+  * {
+    pointer-events: none;
+  }
+}
+
+.effect:active {
+  cursor: grabbing;
+}
+
+.nav-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+[data-icons='true'] .effect nav {
+  opacity: 1;
+}
+
+.effect nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  opacity: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  transition: opacity 0.26s ease-out;
+
+  img {
+    width: 80px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+}
+
+.filter {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+/* Displacement Map Debug Overlay */
+[data-debug='true'] .displacement-debug {
+  translate: 0 calc(100% + 1rem);
+  scale: 1;
+  opacity: 1;
+}
+
+.displacement-debug {
+  pointer-events: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+  translate: 0 calc(200% + 1rem);
+  scale: 0.8;
+  opacity: 0;
+  transition: all 0.26s ease-out;
+  z-index: -1;
+
+  .label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 0.5rem);
+    span {
+      display: inline-block;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 6px;
+      white-space: nowrap;
+      color: #fff;
+    }
+  }
+
+  .displacement-image {
+    height: 100%;
+    width: 100%;
+    border-radius: calc(var(--radius) * 1px);
+  }
+}
+
+/* Tweakpane Controls */
+div.tp-dfwv {
+  position: fixed !important;
+  width: 280px !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  z-index: 9999999 !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
